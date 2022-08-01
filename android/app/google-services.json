@@ -1,0 +1,78 @@
+{
+  "project_info": {
+    "project_number": "11587005773",
+    "firebase_url": "https://contas-trabalhistas.firebaseio.com",
+    "project_id": "contas-trabalhistas",
+    "storage_bucket": "contas-trabalhistas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11587005773:android:6ec3ed6e0d10eb7a",
+        "android_client_info": {
+          "package_name": "br.cap.sistemas.contastrabalhistas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11587005773-4rdejvm8ohkef2td0per6gs20s5eqifq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.cap.sistemas.contastrabalhistas",
+            "certificate_hash": "1d459849f3696591e221c9a69fe86c122f64aa8d"
+          }
+        },
+        {
+          "client_id": "11587005773-5ui5p9oaqdv3hnq4f77ivie332ugqe5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXfbuuve_uraciy7I2inf3SQ4Nnc3JEtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11587005773-5ui5p9oaqdv3hnq4f77ivie332ugqe5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-6442160804361052~2228216729"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11587005773:android:7c487d735d7cfa761fdb04",
+        "android_client_info": {
+          "package_name": "br.cap.sistemas.contastrabalhistas.contastrabalhistas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11587005773-5ui5p9oaqdv3hnq4f77ivie332ugqe5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXfbuuve_uraciy7I2inf3SQ4Nnc3JEtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11587005773-5ui5p9oaqdv3hnq4f77ivie332ugqe5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
