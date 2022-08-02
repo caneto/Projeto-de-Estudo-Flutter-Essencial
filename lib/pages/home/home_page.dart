@@ -1,77 +1,161 @@
-import 'package:contastrabalhistas/pages/home/home_api.dart';
-import 'package:contastrabalhistas/pages/home/home_listview.dart';
-import 'package:contastrabalhistas/utils/prefs.dart';
+import 'package:contastrabalhistas/pages/home/loripsum_api.dart';
+import 'package:contastrabalhistas/pages/home/model/home_model.dart';
+import 'package:contastrabalhistas/widgets/text.dart';
 import 'package:flutter/material.dart';
 
-import '../../drawer_list.dart';
+class HomeDetalhePage extends StatefulWidget {
+  Home? homes;
 
-class HomePage extends StatefulWidget {
+  HomeDetalhePage(this.homes);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomeDetalhePage> createState() => _HomeDetalhePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin<HomePage> {
-
-  TabController? _tabController;
+class _HomeDetalhePageState extends State<HomeDetalhePage> {
+  final _loripsumApiBloc = LoripsumBloc();
 
   @override
   void initState() {
     super.initState();
 
-    _initTabs();
-  }
-
-  _initTabs() async {
-
-    // Primeiro busca o índice nas prefs.
-    int tabIdx = await Prefs.getInt("tabIdx");
-
-    // Depois cria o TabController
-    // No método build na primeira vez ele poderá estar nulo
-    _tabController = TabController(length: 3, vsync: this);
-
-    // Agora que temos o TabController e o índice da tab,
-    // chama o setState para redesenhar a tela
-    setState(() {
-      _tabController?.index = tabIdx;
-    });
-
-    _tabController?.addListener(() {
-        Prefs.setInt("tabIdx", _tabController?.index);
-    });
+    _loripsumApiBloc.fetch();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Carros"),
-        bottom: _tabController == null
-            ? null
-            : TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: "Clássicos",),
-            Tab(text: "Esportivos",),
-            Tab(text: "Luxo",)
+        appBar: AppBar(
+          title: Text(widget.homes!.nome),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.place),
+              onPressed: _onClickMapa,
+            ),
+            IconButton(
+              icon: Icon(Icons.videocam),
+              onPressed: _onClickVideo,
+            ),
+            PopupMenuButton<String>(
+              onSelected: _onClickPopupMenu,
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    value: "Editar",
+                    child: Text("Editar"),
+                  ),
+                  PopupMenuItem(
+                    value: "Deletar",
+                    child: Text("Deletar"),
+                  ),
+                  PopupMenuItem(
+                    value: "Share",
+                    child: Text("Share"),
+                  )
+                ];
+              },
+            )
           ],
         ),
-      ),
-      body: _tabController == null
-          ? Center(
-        child: CircularProgressIndicator(),
-      )
-          : TabBarView(
-        controller: _tabController,
-        children: [
-          HomeListView(TipoHome.classicos),
-          HomeListView(TipoHome.esportivos),
-          HomeListView(TipoHome.luxo),
+        body: _body());
+  }
+
+  _body() {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: ListView(
+        children: <Widget>[
+          Image.network(widget.homes!.urlFoto),
+          _bloco1(),
+          Divider(),
+          _bloco2(),
         ],
       ),
-      drawer: DrawerList(),
     );
   }
-}
 
+  Row _bloco1() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            text(widget.homes!.nome, fontSize: 20, bold: true),
+            text(widget.homes!.tipo, fontSize: 16)
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.red,
+                size: 40,
+              ),
+              onPressed: _onClickFavorito,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.share,
+                size: 40,
+              ),
+              onPressed: _onClickShare,
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  _bloco2() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 20,),
+        text(widget.homes!.descricao,fontSize: 16,bold: true),
+        SizedBox(height: 20,),
+        StreamBuilder<String>(
+          stream: _loripsumApiBloc.stream,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if(!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator(),);
+            }
+
+            return text(snapshot.data,fontSize: 16);
+          },
+        ),
+      ],
+    );
+  }
+
+  void _onClickMapa() {}
+
+  void _onClickVideo() {}
+
+  _onClickPopupMenu(String value) {
+    switch (value) {
+      case "Editar":
+        print("Editar !!!");
+        break;
+      case "Deletar":
+        print("Deletar !!!");
+        break;
+      case "Share":
+        print("Share !!!");
+        break;
+    }
+  }
+
+  void _onClickFavorito() {}
+
+  void _onClickShare() {}
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _loripsumApiBloc.dispose();
+  }
+
+}

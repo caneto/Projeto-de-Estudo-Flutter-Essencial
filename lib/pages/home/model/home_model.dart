@@ -1,8 +1,8 @@
 class Home {
   int? id;
   String nome = "";
-  String? tipo;
-  String? descricao;
+  String tipo = "";
+  String descricao = "";
   String urlFoto = "";
   String? urlVideo;
   String? latitude;
@@ -11,8 +11,8 @@ class Home {
   Home(
       {this.id,
         required this.nome,
-        this.tipo,
-        this.descricao,
+        required this.tipo,
+        required this.descricao,
         required this.urlFoto,
         this.urlVideo,
         this.latitude,
@@ -23,8 +23,12 @@ class Home {
     if(json['nome']!=null) {
       nome = json['nome'];
     } else nome = "";
-    tipo = json['tipo'];
-    descricao = json['descricao'];
+    if(json['tipo']!=null) {
+      tipo = json['tipo'];
+    } else tipo = "";
+    if(json['descricao']!=null) {
+      descricao = json['descricao'];
+    } else descricao = "";
     if(json['urlFotos']!=null) {
       urlFoto = json['urlFoto'].toString();
     } else urlFoto = "";

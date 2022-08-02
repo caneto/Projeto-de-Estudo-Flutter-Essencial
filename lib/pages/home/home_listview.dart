@@ -1,15 +1,16 @@
 import 'dart:async';
 
-import 'package:contastrabalhistas/pages/home/detalhes_page.dart';
+//import 'package:contastrabalhistas/pages/home/detalhes_page.dart';
 //import 'package:contastrabalhistas/pages/home/home_api.dart';
 //import 'package:contastrabalhistas/pages/home/home_bloc.dart';
 import 'package:contastrabalhistas/pages/home/home_mobx.dart';
+import 'package:contastrabalhistas/pages/home/home_page.dart';
 import 'package:contastrabalhistas/utils/nav.dart';
 import 'package:contastrabalhistas/widgets/text_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'home_page.dart';
+import 'home_pages.dart';
 import 'model/home_model.dart';
 
 class HomeListView extends StatefulWidget {
@@ -122,7 +123,7 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
   }
 
   _onClickHome(Home home) {
-    push(context, DetalhesPage(home));
+    push(context, HomeDetalhePage(home));
   }
 
  // @override

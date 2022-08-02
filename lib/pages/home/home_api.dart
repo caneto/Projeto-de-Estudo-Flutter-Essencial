@@ -18,9 +18,9 @@ class HomeApi {
 
     await Future.delayed(Duration(seconds: 2));
 
-    home.add(Home(nome: "Conteudo teste 1", urlFoto: "https://statig2.akamaized.net/bancodeimagens/1q/mi/qg/1qmiqgdki9ltthfpb43tkx94p.jpg"));
-    home.add(Home(nome: "Conteudo teste 2", urlFoto: "https://statig2.akamaized.net/bancodeimagens/82/66/gd/8266gdo8hdufo4tgy5tya2bka.jpg"));
-    home.add(Home(nome: "Conteudo teste 3", urlFoto: "https://statig2.akamaized.net/bancodeimagens/ch/xs/xl/chxsxl9nxwizkx1j9u3hjrcpw.jpg"));
+    home.add(Home(nome: "Conteudo teste 1", urlFoto: "https://statig2.akamaized.net/bancodeimagens/1q/mi/qg/1qmiqgdki9ltthfpb43tkx94p.jpg", tipo: '', descricao: ''));
+    home.add(Home(nome: "Conteudo teste 2", urlFoto: "https://statig2.akamaized.net/bancodeimagens/82/66/gd/8266gdo8hdufo4tgy5tya2bka.jpg", tipo: '', descricao: ''));
+    home.add(Home(nome: "Conteudo teste 3", urlFoto: "https://statig2.akamaized.net/bancodeimagens/ch/xs/xl/chxsxl9nxwizkx1j9u3hjrcpw.jpg", tipo: '', descricao: ''));
 
     return home;
   }
