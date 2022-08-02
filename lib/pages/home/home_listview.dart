@@ -23,6 +23,8 @@ class HomeListView extends StatefulWidget {
 class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClientMixin<HomeListView> {
   List<Home> homes = [];
 
+  String get tipo => widget.tipo;
+
   //final _bloc = HomeBloc();
   final _mobx = HomeMobx();
 
@@ -33,7 +35,11 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
   void initState() {
     super.initState();
 
-    _mobx.fetch(widget.tipo);
+    _fetch();
+  }
+
+  void _fetch() {
+    _mobx.fetch(tipo);
   }
 
   @override
@@ -46,7 +52,8 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
         List<Home>? homes = _mobx.homes;
 
         if (_mobx.error != null) {
-          return TextError("Não foi possivel buscar os dados");
+          return TextError("Não foi possivel buscar os dados\n\nClick aqui para tentar novamente",
+          onPressed: _fetch);
         }
         if (homes == null) {
           return const Center(
