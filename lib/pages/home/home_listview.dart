@@ -4,6 +4,7 @@ import 'package:contastrabalhistas/pages/home/detalhes_page.dart';
 import 'package:contastrabalhistas/pages/home/home_api.dart';
 import 'package:contastrabalhistas/pages/home/home_bloc.dart';
 import 'package:contastrabalhistas/utils/nav.dart';
+import 'package:contastrabalhistas/widgets/text_error.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
@@ -40,19 +41,10 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
       stream: _bloc.stream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Center(
-            child: Text(
-              "Não foi possivel buscar os dados",
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 22,
-              ),
-            ),
-          );
+          return TextError("Não foi possivel buscar os dados");
         }
-
         if (!snapshot.hasData) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -91,7 +83,7 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 22),
                     ),
-                    Text(
+                    const Text(
                       "descrição...",
                       style: TextStyle(fontSize: 22),
                     ),

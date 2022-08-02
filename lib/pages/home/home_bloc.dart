@@ -1,22 +1,20 @@
 
-import 'dart:async';
-
 import 'package:contastrabalhistas/pages/home/home_api.dart';
 import 'package:contastrabalhistas/pages/home/model/home_model.dart';
+import 'package:contastrabalhistas/pages/home/simple_bloc.dart';
 
-class HomeBloc {
-  final _streamControllerState = StreamController<List<Home>>();
+class HomeBloc extends SimpleBloc<List<Home>> {
 
-  get stream => _streamControllerState.stream;
 
   fetch(String tipo) async {
-    List<Home> homes = await HomeApi.getHome(tipo);
-    _streamControllerState.add(homes);
+    try {
+      List<Home> homes = await HomeApi.getHome(tipo);
+      add(homes);
+    } catch (e) {
+      addError(e);
+    }
   }
 
-  @override
-  void dispose() {
-    _streamControllerState.close();
-  }
+
 }
 
