@@ -1,15 +1,20 @@
 
 import 'package:contastrabalhistas/pages/home/home_api.dart';
+import 'package:contastrabalhistas/pages/home/home_bloc.dart';
 import 'package:contastrabalhistas/pages/home/model/home_model.dart';
 import 'package:mobx/mobx.dart';
 
-class HomeMobx  {
+part 'home_mobx.g.dart';
+
+class HomeMobx = HomeMobxBase with _$HomeMobx;
+
+abstract class HomeMobxBase with Store  {
 
   @observable
-  late List<Home> homes;
+  List<Home>? homes;
 
   @observable
-  late Exception? error;
+  Exception? error;
 
   @action
   fetch(String tipo) async {
@@ -22,7 +27,5 @@ class HomeMobx  {
       error = e as Exception?;
     }
   }
-
-
 }
 

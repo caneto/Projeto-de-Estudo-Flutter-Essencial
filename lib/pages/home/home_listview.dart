@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:contastrabalhistas/pages/home/detalhes_page.dart';
-import 'package:contastrabalhistas/pages/home/home_api.dart';
-import 'package:contastrabalhistas/pages/home/home_bloc.dart';
+//import 'package:contastrabalhistas/pages/home/home_api.dart';
+//import 'package:contastrabalhistas/pages/home/home_bloc.dart';
+import 'package:contastrabalhistas/pages/home/home_mobx.dart';
 import 'package:contastrabalhistas/utils/nav.dart';
 import 'package:contastrabalhistas/widgets/text_error.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'home_page.dart';
 import 'model/home_model.dart';
@@ -21,7 +23,8 @@ class HomeListView extends StatefulWidget {
 class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClientMixin<HomeListView> {
   List<Home> homes = [];
 
-  final _bloc = HomeBloc();
+  //final _bloc = HomeBloc();
+  final _mobx = HomeMobx();
 
   @override
   bool get wantKeepAlive => true;
@@ -30,26 +33,26 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
   void initState() {
     super.initState();
 
-    _bloc.fetch(widget.tipo);
+    _mobx.fetch(widget.tipo);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    return StreamBuilder(
-      stream: _bloc.stream,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
+    return Observer(
+      builder: (context) {
+
+        List<Home>? homes = _mobx.homes;
+
+        if (_mobx.error != null) {
           return TextError("Não foi possivel buscar os dados");
         }
-        if (!snapshot.hasData) {
+        if (homes == null) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-
-        List<Home> homes = snapshot.data as List<Home>;
 
         return _listView(homes);
       },
@@ -73,7 +76,7 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
                   children: <Widget>[
                     Center(
                       child: Image.network(
-                        home.urlFoto ?? "https://statig2.akamaized.net/bancodeimagens/1q/mi/qg/1qmiqgdki9ltthfpb43tkx94p.jpg",
+                        home.urlFoto,
                         width: 250,
                       ),
                     ),
@@ -115,10 +118,10 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
     push(context, DetalhesPage(home));
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-
-    _bloc.dispose();
-  }
+ // @override
+ // void dispose() {
+ //   super.dispose();
+ //   _bloc.dispose();
+ // }
 }
+
