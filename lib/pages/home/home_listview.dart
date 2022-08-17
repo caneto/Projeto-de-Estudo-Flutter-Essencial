@@ -1,13 +1,13 @@
 import 'dart:async';
 
-//import 'package:contastrabalhistas/pages/home/detalhes_page.dart';
-//import 'package:contastrabalhistas/pages/home/home_api.dart';
-//import 'package:contastrabalhistas/pages/home/home_bloc.dart';
-import 'package:contastrabalhistas/pages/home/home_mobx.dart';
+import 'package:contastrabalhistas/pages/home/detalhes_page.dart';
+import 'package:contastrabalhistas/pages/home/home_api.dart';
+import 'package:contastrabalhistas/pages/home/home_bloc.dart';
+//import 'package:contastrabalhistas/pages/home/home_mobx.dart';
 import 'package:contastrabalhistas/pages/home/home_page.dart';
 import 'package:contastrabalhistas/utils/nav.dart';
 import 'package:contastrabalhistas/widgets/text_error.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'home_pages.dart';
@@ -26,8 +26,8 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
 
   String get tipo => widget.tipo;
 
-  //final _bloc = HomeBloc();
-  final _mobx = HomeMobx();
+  final _bloc = HomeBloc();
+  //final _mobx = HomeMobx();
 
   @override
   bool get wantKeepAlive => true;
@@ -40,27 +40,33 @@ class _HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClie
   }
 
   void _fetch() {
-    _mobx.fetch(tipo);
+    //_mobx.fetch(tipo);
+    _bloc.fetch(tipo);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Observer(
-      builder: (context) {
+    //return Observer(
+    return StreamBuilder(
+      stream: _bloc.stream,
+      builder: (context, snapshot) {
 
-        List<Home>? homes = _mobx.homes;
+        //List<Home>? homes = _mobx.homes;
 
-        if (_mobx.error != null) {
+        //if (_mobx.error != null) {
+        if (snapshot.hasError) {
           return TextError("Não foi possivel buscar os dados\n\nClick aqui para tentar novamente",
           onPressed: _fetch);
         }
-        if (homes == null) {
+        if (!snapshot.hasData) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
+
+        List<Home>? homes = snapshot.data as List<Home>?;
 
         return _listView(homes);
       },
